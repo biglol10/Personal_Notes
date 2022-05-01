@@ -1,0 +1,24 @@
+// package-lock.json => 내가 의존하고 있는 패키지의 정보가 package.json에 없으니 의존하고 있는 패키지의 정보까지 다 있는 
+npm init
+npm i react react-dom
+npm i typescript
+npm i @types/react @types/react-dom
+npm i -D eslint
+// eslint-plugin-prettier => prettier와 eslint 연결해주는 것
+npm i -D prettier eslint-plugin-prettier eslint-config-prettier
+npm i -D webpack webpack-cli @babel/core babel-loader @babel/preset-env @babel/preset-react @babel/preset-typescript
+npm i -D @types/webpack @types/node @babel/preset-typescript
+npm i style-loader css-loader
+webpack 실행 명령어는 그냥 npx webpack  npx를 안 붙이고 싶을 땐 npm i webpack -g (g로 설치해야 webpack으로 실행 가... 요즘은 global설치 안함)
+js로 할거면 그냥 webpack... ts로 할거면 cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack  // window랑 linux가 서로 되는 경우 안되는 경우 있어서 cross-env해야함 (npm i cross-env, npm i ts-node)
+원래라면 뭐 하나 바꾸고 npm run build 하고 index.html을 refresh 해야되는데 그걸 안하게 하기 위해 hot reloading이 필요함 (근데 하려면 서버를 해야함)
+npm i -D webpack-dev-server    (webpack dev server는 나중에 proxy서버 역할도 해줌... CORS에러를 또 해결해줌 그래서 npm i webpack-cli도 해줌)
+npm i -D @types/webpack-dev-server
+npm i @pmmmwh/react-refresh-webpack-plugin
+npm i react-refresh
+npm i fork-ts-checker-webpack-plugin -D
+// devserver 설정 시 npm i --save-dev @types/webpack-dev-server,  npm i webpack-bundle-analyzer
+npm i @emotion/babel-plugin
+// 콘솔에서 확인 가능
+[webpack-dev-server] Hot Module Replacement enabled.
+index.js:551 [webpack-dev-server] Live Reloading enabled.
