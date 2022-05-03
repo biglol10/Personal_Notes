@@ -1,0 +1,51 @@
+** 자주 사용하는 로더
+
+css에 loader를 설정하게 되면 js에서 css file을 모듈로 불러올 수 있음
+npm install css-loader
+style-loader는 js에 반영된 css코드를 html에 넣어줌
+npm i style-loader
+이미지 처리 로더
+npm i file-loader
+이미지를 base64로
+npm install url-loader
+npm install -D html-webpack-plugin
+npm i clean-webpack-plugin
+$env:NODE_ENV="development"
+npm install -D mini-css-extract-plugin
+
+** babel
+npm install @babel/core@7.7.7 @babel/cli
+
+바벨은 3단계로 빌드를 진행
+1. 파싱 => 코드를 받아서 각 토큰별로 다 분해하는 과정
+2. 변환 => ES6을 ES5로
+3. 출력
+
+npx babel app.js --plugins './my-babel-plugin.js'
+npm install -D @babel/plugin-transform-block-scoping
+npm install -D @babel/plugin-transform-arrow-functions
+npx babel app.js --plugins @babel/plugin-transform-block-scoping
+npm @babel/plugin-transform-strict-mode
+npm install -D @babel/preset-env
+
+npm install -D babel-loader
+npm i core-js@2
+
+babel은 babel/core가 있는데 babel/core는 코드를 파싱하고 파싱한 결과를 출력하기만 함...
+파싱한 후 변환을 해야 하는데 변환하는 작업을 plugin이 preset 세트로 처리함
+마지막으로 babel을 웹팩과 통합해서 사용하려면 babel-loader 이
+
+scss 적용
+npm install sass-loader node-sass
+==> node-sass는 sass코드를 css로 컴파일 해줌
+sass-loader는 webpack에서 loader역할을 하면서 sass파일을 만나면 node-sass를 내부적으로 돌려줌
+npm install sass-loader@10
+npm install node-sass@6
+
+
+** lint, prettier
+npm i eslint
+npx eslint --init
+npm i prettier
+npm i eslint-config-prettier
+npm i eslint-plugin-prettier
