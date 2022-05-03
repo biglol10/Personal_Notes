@@ -1,0 +1,48 @@
+{
+  "name": "lecture-frontend-dev-env",
+  "version": "1.0.0",
+  "description": "\"프론트엔드 개발 환경의 이해\" 강의 자료입니다.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeonghwan-kim/lecture-frontend-dev-env.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeonghwan-kim/lecture-frontend-dev-env/issues"
+  },
+  "homepage": "https://github.com/jeonghwan-kim/lecture-frontend-dev-env#readme",
+  "dependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-transform-arrow-functions": "^7.16.7",
+    "@babel/plugin-transform-block-scoping": "^7.16.7",
+    "@babel/plugin-transform-strict-mode": "^7.16.7",
+    "@babel/preset-env": "^7.17.10",
+    "babel-loader": "^8.2.5",
+    "clean-webpack-plugin": "^4.0.0",
+    "core-js": "^2.6.12",
+    "css-loader": "^3.4.2",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "file-loader": "^5.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^6.0.1",
+    "prettier": "^2.6.2",
+    "sass-loader": "^10.2.1",
+    "style-loader": "^1.1.3",
+    "url-loader": "^4.1.1",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "devDependencies": {
+    "eslint": "^8.14.0"
+  }
+}
