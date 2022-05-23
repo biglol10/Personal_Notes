@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2015", // 어떤 버전의 JS로 컴파일 할 것인지
+    "module": "commonjs", // node.js를 평범하게 사ㅇ하게 하면서 다양한 것을 import/export 할 수 있게함
+    "declaration": false,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "outDir": "dist" // 컴파일 된 파일을 dist폴더에 저장
+  },
+  // "include": ["**/*"],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
