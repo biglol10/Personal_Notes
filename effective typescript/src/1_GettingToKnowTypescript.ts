@@ -384,3 +384,52 @@ const wyoming: IStateAUG = {
 	capital: 'Cheyenne',
 	population: 500_000,
 }; // OK
+
+// ****** Use Type Operations and Generics to Avoid Repeating Yourself
+type HTTPFunction = (url: string, opts: Options) => Promise<Response>;
+const get: HTTPFunction = (url, opts) => {
+	return null;
+};
+const post: HTTPFunction = (url, opts) => {
+	return null;
+};
+
+interface Person4 {
+	firstName: string;
+	lastName: string;
+}
+
+interface PersonWithBirthDate extends Person4 {
+	birth: Date;
+}
+
+// What if you have a type, State, which represents the state of an entire application, and another, TopNavState, which represents just a part?
+interface State {
+	userId: string;
+	pageTitle: string;
+	recentFiles: string[];
+	pageContents: string;
+}
+type TopNavState = {
+	[k in 'userId' | 'pageTitle' | 'recentFiles']: State[k];
+};
+
+// Mapped types are the type system equivalent of looping over the fields in an array.
+// This particular pattern is so common that it’s part of the standard library, where it’s called Pick
+// type Pick<T, K> = { [k in K]: T[k] };
+// Pick is an example of a generic type. Continuing the analogy to removing code duplication, using Pick is the equivalent of calling a function.
+// Pick takes two types, T and K, and returns a third, much as a function might take two values and return a third.
+type TopNavState2 = Pick<State, 'userId' | 'pageTitle' | 'recentFiles'>;
+
+//
+interface SaveAction {
+	type: 'save';
+	// ...
+}
+interface LoadAction {
+	type: 'load';
+	// ...
+}
+type Action = SaveAction | LoadAction;
+// type ActionType = 'save' | 'load'; // Repeated types!
+type ActionType = Action['type']; // Type is "save" | "load"
