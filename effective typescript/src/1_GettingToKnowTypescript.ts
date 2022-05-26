@@ -410,6 +410,11 @@ interface State {
 	recentFiles: string[];
 	pageContents: string;
 }
+type TopNavStateWithState = {
+	userId: State['userId'];
+	pageTitle: State['pageTitle'];
+	recentFiles: State['recentFiles'];
+};
 type TopNavState = {
 	[k in 'userId' | 'pageTitle' | 'recentFiles']: State[k];
 };
@@ -433,3 +438,144 @@ interface LoadAction {
 type Action = SaveAction | LoadAction;
 // type ActionType = 'save' | 'load'; // Repeated types!
 type ActionType = Action['type']; // Type is "save" | "load"
+// As you add more types to the Action union, ActionType will incorporate them automatically.
+// This type is distinct from what you’d get using Pick, which would give you an interface with a type property:
+type ActionRec = Pick<Action, 'type'>; // { type: "save" | "load" }
+
+// If you’re defining a class which can be initialized and later updated, the type for the parameter to the update method
+// will optionally include most of the same parameters as the constructor:
+interface Options {
+	width: number;
+	height: number;
+	color: string;
+	label: string;
+}
+interface OptionsUpdate {
+	width?: number;
+	height?: number;
+	color?: string;
+	label?: string;
+}
+class UIWidget {
+	constructor(init: Options) {
+		/* */
+	}
+	update(options: OptionsUpdate) {
+		/* */
+	}
+}
+
+// You can construct OptionsUpdate from Options using a mapped type and keyof:
+type OptionsUpdate2 = { [k in keyof Options]?: Options[k] };
+// keyof takes a type and gives you a union of the types of its keys:
+type OptionsKeys = keyof Options;
+// Type is "width" | "height" | "color" | "label"
+
+// The ? makes each property optional. This pattern is also extremely common and is included in the standard library as Partial:
+class UIWidget2 {
+	constructor(init: Options) {
+		/* */
+	}
+	update(options: Partial<Options>) {
+		/* */
+	}
+}
+
+// You may want to create a named type for the inferred return value of a function or method:
+function getUserInfo(userId: string) {
+	// ...
+	return {
+		userId,
+		name: 'asdf',
+		age: 123,
+		height: 123,
+		weight: 123,
+		favoriteColor: 'black',
+	};
+}
+// Return type inferred as { userId: string; name: string; age: number, ... }
+
+// ** Generic types are the equivalent of functions for types. And functions are the key to DRY for logic. So it should come as no surprise
+// that generics are the key to DRY for types. But there’s a missing piece to this analogy. You use the type system to constrain the values
+// you can map with a function: you add numbers, not objects; you find the area of shapes, not database records. How do you constrain the
+// parameters in a generic type?
+// => You do so with extends. You can declare that any generic parameter extends a type. For example:
+interface Name {
+	first: string;
+	last: string;
+}
+type DancingDuo<T extends Name> = [T, T];
+
+const couple1: DancingDuo<Name> = [
+	{ first: 'Fred', last: 'Astraire' },
+	{ first: 'Ginger', last: 'Rogers' },
+];
+// const couple2: DancingDuo<{ first: string }> = [
+// 	// ~~~~~~~~~~~~~~~
+// 	// Property 'last' is missing in type
+// 	// '{ first: string; }' but required in type 'Name'
+// 	{ first: 'Sonny' },
+// 	{ first: 'Cher' },
+// ];
+
+// At the moment, TypeScript always requires you to write out the generic parameter in a declaration. Writing DancingDuo instead of DancingDuo<Name>
+// won’t cut it. If you want TypeScript to infer the type of the generic parameter, you can use a carefully typed identity function:
+const dancingDuo2 = <T extends Name>(x: DancingDuo<T>) => x;
+const couple11 = dancingDuo2([
+	{ first: 'Fred', last: 'Astaire' },
+	{ first: 'Ginger', last: 'Rogers' },
+]);
+// const couple22 = dancingDuo2([
+// 	{ first: 'Bono' },
+// 	// ~~~~~~~~~~~~~~
+// 	{ first: 'Prince' },
+// 	// ~~~~~~~~~~~~~~~~
+// 	//     Property 'last' is missing in type
+// 	//     '{ first: string; }' but required in type 'Name'
+// ]);
+
+// Pick is declared like this
+// type Pick<T, K extends keyof T> = {
+//   [k in K]: T[k]
+// };  // OK
+type FirstLast = Pick<Name, 'first' | 'last'>; // OK
+// type FirstMiddle = Pick<Name, 'first' | 'middle'>;
+//                            // ~~~~~~~~~~~~~~~~~~
+//                            // Type '"middle"' is not assignable
+//                            // to type '"first" | "last"'
+
+// ****** Use Index Signatures for Dynamic Data
+
+type Rocket = { [property: string]: string };
+const rocket: Rocket = {
+	name: 'Falcon 9',
+	variant: 'Block 5',
+	thrust: '7,607 kN',
+};
+// Downside
+// It allows any keys, including incorrect ones. Had you written Name instead of name, it would have still been a valid Rocket type.
+// It doesn’t require any specific keys to be present. {} is also a valid Rocket.
+// It cannot have distinct types for different keys. For example, thrust should probably be a number, not a string.
+// TypeScript’s language services can’t help you with types like this. As you’re typing name:, there’s no autocomplete because the key could be anything.
+// use the following
+
+interface Rocket2 {
+	name: string;
+	variant: string;
+	thrust_kN: number;
+}
+
+type Vec3D_1 = Record<'x' | 'y' | 'z', number>;
+// Type Vec3D = {
+//   x: number;
+//   y: number;
+//   z: number;
+// }
+type Vec3D_2 = { [k in 'x' | 'y' | 'z']: number };
+// Same as above
+type ABC = { [k in 'a' | 'b' | 'c']: k extends 'b' ? string : number };
+// Type ABC = {
+//   a: number;
+//   b: string;
+//   c: number;
+// }
