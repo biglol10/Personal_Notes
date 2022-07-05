@@ -7,6 +7,9 @@ git reset --mixed HEAD^ (mixed 생략 가능) // 마지막 커밋은 사라짐. 
 git reset --soft HEAD^ // staging, working directory 다 살아있음
 
 
+** .gitignore
+git rm -rf --cached .
+git add .
 
 ** BRANCH <br/>
 한번이라도 커밋하지 않은 상태로 branch 생성하려고 하면 에러 <br/>
