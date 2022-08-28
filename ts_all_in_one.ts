@@ -356,3 +356,172 @@ if(catOrDog(cat13)){
 if('meow' in cat13){
     console.log(cat13.meow)
 }
+
+
+/** ****************************************************************************************
+ * @설명 : 14. readonly, 인덱스드 시그니처, 맵드 타입스
+ ********************************************************************************************
+ * 기본 문법 배우기_2: 
+********************************************************************************************/
+
+interface A14 {
+    readonly a: string;
+    b: string;
+}
+
+const A14: A14 = {
+    a: 'hello',
+    b: 'hi'
+}
+
+type A14_2 = {
+    [key: string] : string;
+}
+
+type B14 = 'Human' | 'Mammal' | 'Animal'; // interface로는 또는 이 안됨 안됨.
+type A14_3 = {
+    [key in B14] : string;
+}
+
+type A14_4 = {
+    [key in B14]: B14;
+}
+
+const aa14: A14_4 = {Human: 'Human', Mammal: 'Mammal', Animal: 'Animal'}
+
+
+/** ****************************************************************************************
+ * @설명 : 15. 클래스의 새로운 기능들
+ ********************************************************************************************
+ * 기본 문법 배우기_2: 
+********************************************************************************************/
+
+class A15 {  // 클래스는 그 자체로 type임
+    a: string;
+    b: string;
+    private c: string = '1123';  // js에서 제공하는 private, protected는 private랑 비슷하지만 상속받은 애들은 사용가능
+    #d: string = '123q'; // typescript 에서 제공하는 private
+
+    constructor(a: string, b: string = 'qwer') {
+        this.a = a;
+        this.b = b;
+    }
+
+    method() {
+
+    }
+}
+
+const A15_1 = new A15('weqr')
+type AA15 = A15;
+const a15: A15 = new A15('123');
+const b15: typeof A15 = A15;
+
+interface A15_2 {
+    readonly a: string;
+    b: string;
+}
+
+class B15_2 implements A15_2 {  // typescript가 알아서 constructor 넣어줌. 굳이 class에 implements 안 써도됨
+    a: string = 'qwer';
+    b: string = 'xzvxvz';
+}
+
+class C15 extends B15_2 {};
+new C15().a;
+new C15().b;
+
+
+/** ****************************************************************************************
+ * @설명 : 16. 옵셔널, 제네릭 기본
+ ********************************************************************************************
+ * 기본 문법 배우기_2: 
+********************************************************************************************/
+
+function abc16(...args: number[]) {}
+
+// function add16(a: string | number, b: string | number) {return a+ b}; // add16(1,'2') 같은건 걸러낼 수 없으니 잘못된 코드
+// add16(1,2); add16('2','1'); 만 되게 하고싶음... add16(true, false) 도 안되게
+
+/** @definition generic = 지금 타입이 뭔지 모르겠는데 나중에 정함... 타입을 변수처럼 만드는 것... 함수뒤에 보통은 T로 많이 적음 */
+
+function add16_1<T extends string | number>(x: T, y: T): T { // 같은 타입은 전부 다 같은 문자로 표현하는 것
+    return x + y;
+}
+
+// 그럼 add16_1(1,2), add16_1('2','2')은 되는데 다른 케이스는 안되게 막음
+// generic은 함수를 선언할 때 말고 함수를 쓸 때 타입이 정해질 수 있도록 함
+// T의 타입이 너무 넓어지기 때문에 제한을 줄 수 있음 (extends)
+
+function add16_2<T extends number, K extends string>(x: T, y: K): T {
+    return x + y;
+} 
+
+// function add<T extends (a: string) => number>(x: T): T { return +X };
+// <T extends {...}>  면 add({a: 'asdf'})
+// <T extends any[]>
+// <T extends (...args, any) => any> -->  function add<T extends (...args: any) => number>(x: T): T { return +X }; 이런 경우는 any 가능 (제한이 없는 경우)
+// <T extends abstract new (...args: any) => any> --> function add<T extends abstract new (...args: any) => any>(x: T): T {return x}
+// class A, add(A);
+
+
+/** ****************************************************************************************
+ * @설명 : 17. 기본값 타이핑
+ ********************************************************************************************
+ * 기본 문법 배우기_2: 
+********************************************************************************************/
+
+// React에서
+const add17 = <T = unknown>(x: T, y: T) => ({x,y}) // 그냥 T 쓰면 태그처럼 인식, 아니면 extends unknown, 아니면 T, 도 가능
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
