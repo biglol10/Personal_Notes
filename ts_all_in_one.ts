@@ -1,6 +1,6 @@
 // https://github.com/ZeroCho/ts-all-in-one/blob/main/README.md
 
-import { YieldExpression } from "./node_modules/typescript/lib/typescript";
+// import { YieldExpression } from "./node_modules/typescript/lib/typescript";
 
 /** ****************************************************************************************
  * @설명 : 1. 타입스크립트는 변수, 매개변수, 리턴값에 타입 붙이는 것
